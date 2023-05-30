@@ -1,4 +1,4 @@
-#Clock-in/Clock-out System
+Clock-in/Clock-out System
 =========================
 
 This clock-in/clock-out system is built using HTML, CSS, and JavaScript with Google Sheet and Google Script integration. The system allows employees to clock in and out, saving their name or ID and the corresponding timestamps in a Google Sheet. It calculates the total worked time for each period and maintains a separate column for the total work time of each employee.
