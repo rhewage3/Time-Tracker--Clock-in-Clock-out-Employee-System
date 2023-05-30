@@ -20,7 +20,8 @@ To set up the clock-in/clock-out system, follow these steps:
 
 1.  Create a new Google Sheet and name it "Time Tracker".
 2.  In the Google Sheet, create two sheets named "EMPLOYEES" and "MAIN". (Create the "MAIN" sheet like below)
-3.  
+3.  ![example](https://github.com/rhewage3/Time-Tracker--Clock-in-Clock-out-Employee-System/assets/123268275/8df63037-c1f8-4744-85c7-bd4999c82063)
+
 4.  Copy and paste the contents of the HTML file into a new HTML file in your preferred code editor.
 5.  Save the HTML file as "TimeTracker.html".
 6.  Copy and paste the contents of the code.gs file into a new Google Script file in your Google Sheet.
