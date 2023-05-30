@@ -19,18 +19,19 @@ Setup Instructions
 To set up the clock-in/clock-out system, follow these steps:
 
 1.  Create a new Google Sheet and name it "Time Tracker".
-2.  In the Google Sheet, create two sheets named "EMPLOYEES" and "MAIN".
-3.  Copy and paste the contents of the HTML file into a new HTML file in your preferred code editor.
-4.  Save the HTML file as "TimeTracker.html".
-5.  Copy and paste the contents of the code.gs file into a new Google Script file in your Google Sheet.
-6.  Save the Google Script file as "Code.gs".
-7.  Publish the script as a web app by following these steps:
+2.  In the Google Sheet, create two sheets named "EMPLOYEES" and "MAIN". (Create the "MAIN" sheet like below)
+3.  
+4.  Copy and paste the contents of the HTML file into a new HTML file in your preferred code editor.
+5.  Save the HTML file as "TimeTracker.html".
+6.  Copy and paste the contents of the code.gs file into a new Google Script file in your Google Sheet.
+7.  Save the Google Script file as "Code.gs".
+8.  Publish the script as a web app by following these steps:
     -   In the Google Sheet, click on "Extensions" in the menu.
     -   Go to "Apps Script" and click on "Deploy as web app".
     -   Set the access to "Anyone, even anonymous" and click on "Deploy".
     -   Copy the deployed web app URL.
-8.  In the HTML file, replace the `<base target="_top">` tag's `href` attribute with the web app URL obtained in the previous step.
-9.  Save the HTML file.
+9.  In the HTML file, replace the `<base target="_top">` tag's `href` attribute with the web app URL obtained in the previous step.
+10.  Save the HTML file.
 
 Now, you can use the clock-in/clock-out system by accessing the HTML file through the web app URL. The system will interact with the Google Sheet to track employee attendance and calculate total work hours.
 
