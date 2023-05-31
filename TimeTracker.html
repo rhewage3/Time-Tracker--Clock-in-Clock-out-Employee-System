@@ -4,129 +4,166 @@
     <base target="_top">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-YOTy4rBMJ22CY7o5iA04SkFXd2MhZg4pd/Zfev6+LRVdqqxNedQGr9fU6uQ/rdFSZPM5hx2E0pQ8dn5aaK26cw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-zCqEQ4SrdTMvCbjJjIXAeXfu8YXp6nTkXzlZCh26dH94H56g4j+2Q+hS5JnTnBxVfKos0zFQ0UJZpsFlglSTgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+      body {
+        background-color: #1e1e1e;
+        color: #f8f8f8;
+      }
+
+      h1 {
+        text-align: center;
+        color: #f8f8f8;
+        background-color: #0b0b0b;
+        padding: 10px;
+       }
+
+      .form-row {
+        display: flex;
+        justify-content: center;
+      }
+
+      .form-group {
+        margin: 0 auto;
+      }
+
+      label {
+        color: #f8f8f8;
+        font-weight: bold;
+      }
+
+      .form-control {
+        background-color: #2d2d2d;
+        color: #f8f8f8;
+        border-color: #555555;
+      }
+
+      .form-control:hover,
+      .form-control:focus {
+        background-color: #262626;
+        color: #f8f8f8;
+        border-color: #777777;
+        box-shadow: none;
+      }
+
+      .btn-primary {
+        background-color: #1b6ec2;
+        border-color: #1861a8;
+      }
+
+      .btn-primary:hover {
+        background-color: #1861a8;
+        border-color: #155396;
+      }
+
+      .alert {
+        margin-top: 10px;
+        padding: 10px;
+      }
+
+      .alert-primary {
+        background-color: #004d99;
+        color: #f8f8f8;
+      }
+
+      .alert-warning {
+        background-color: #e6ac00;
+        color: #1e1e1e;
+      }
+
+         
+    </style>
+  
     <script>
-    $( document ).ready(function() {
-      getEmployees();
-    });
-    
-    function getEmployees() 
-    {
-    
-    google.script.run.withSuccessHandler(function(ar) 
-    {
-    var employeeSelect = document.getElementById("employee");
-    console.log(ar);
-    
-    let option = document.createElement("option");
-    option.value = "";
-    option.text = "";
-    employeeSelect.appendChild(option);
-    
-    ar.forEach(function(item, index) 
-    {    
-      let option = document.createElement("option");
-      var employee = item[0];
-      option.value = item[0];
-      option.text = item[0];
-      employeeSelect.appendChild(option);    
-    });
-    }).getEmployees();
-    
-    };
-    
-    function ClockIn()
-    {
-    
-    $('#message').html("");
-    var employee = document.getElementById("employee").value;
-    
-    if(employee != '')
-    {
-    
-    google.script.run.withSuccessHandler(function(ar) 
-    {
-     console.log(ar);
-    ar.forEach(function(item, index) 
-    {
-    
-    if(item[0] == 'SUCCESS')
-    {
-    var message = item[2] + ' Clocked in at ' + item[1];
-    $('#message').html(message);
-    document.getElementById("message").className = "alert alert-primary";
-    }
-    else
-    {
-    var message = item[2] + ' ' + item[0];
-    $('#message').html(message);
-    document.getElementById("message").className = "alert alert-warning"; 
-    }
-    
-     
-    });
-    
-    }).clockIn(employee);
-    
-    }
-    }
-    
-    function ClockOut()
-    {
-    
-    $('#message').html("");
-    var employee = document.getElementById("employee").value;
-    
-    if(employee != '')
-    {
-    
-    google.script.run.withSuccessHandler(function(ar) 
-    {
-    console.log(ar);
-    ar.forEach(function(item, index) 
-    {
-    
-    if(item[0] == 'SUCCESS')
-    {
-    var message = item[2] + ' Clocked out at ' + item[1];
-    $('#message').html(message);
-    document.getElementById("message").className = "alert alert-primary";
-    }
-    else
-    {
-    var message = item[2] + ' ' + item[0];
-    $('#message').html(message);
-    document.getElementById("message").className = "alert alert-warning"; 
-    }
-        
-    });
-    
-    }).clockOut(employee);
-    
-    }
-    }
+      $(document).ready(function() {
+        getEmployees();
+      });
+
+      function getEmployees() {
+        google.script.run.withSuccessHandler(function(ar) {
+          var employeeSelect = $("#employee");
+          console.log(ar);
+
+          employeeSelect.append('<option value=""></option>');
+
+          ar.forEach(function(item, index) {
+            var employee = item[0];
+            employeeSelect.append('<option value="' + employee + '">' + employee + '</option>');
+          });
+
+          employeeSelect.select2({
+            placeholder: "Search for an employee",
+            allowClear: true
+          });
+        }).getEmployees();
+      }
+
+      function ClockIn() {
+        $('#message').html("");
+        var employee = $("#employee").val();
+
+        if (employee !== "") {
+          google.script.run.withSuccessHandler(function(ar) {
+            console.log(ar);
+            ar.forEach(function(item, index) {
+              if (item[0] === "SUCCESS") {
+                var message = item[2] + ' Clocked in at ' + item[1];
+                $('#message').html(message);
+                $('#message').removeClass().addClass("alert alert-primary");
+              } else {
+                var message = item[2] + ' ' + item[0];
+                $('#message').html(message);
+                $('#message').removeClass().addClass("alert alert-warning");
+              }
+            });
+          }).clockIn(employee);
+        }
+      }
+
+      function ClockOut() {
+        $('#message').html("");
+        var employee = $("#employee").val();
+
+        if (employee !== "") {
+          google.script.run.withSuccessHandler(function(ar) {
+            console.log(ar);
+            ar.forEach(function(item, index) {
+              if (item[0] === "SUCCESS") {
+                var message = item[2] + ' Clocked out at ' + item[1];
+                $('#message').html(message);
+                $('#message').removeClass().addClass("alert alert-primary");
+              } else {
+                var message = item[2] + ' ' + item[0];
+                $('#message').html(message);
+                $('#message').removeClass().addClass("alert alert-warning");
+              }
+            });
+          }).clockOut(employee);
+        }
+      }
     </script>
   </head>
   <body>
-  <div style="padding: 10px;" >
-  <h1>Time Tracker</h1><br>
-  <form>
-  <div class="form-row">
-  <div class="form-group col-md-4">
-  <label for="employee">Employee</label>
-  <select class="form-control" id="employee">
-  </select>
-  </div>
-  </div>
-  <div class="form-row">
-  <div class="form-group col-md-4">
-  <input type="button" value="Clock In" id="clockin" class="btn btn-primary" onclick="ClockIn()" />
-  <input type="button" value="Clock Out" id="clockout" class="btn btn-primary" onclick="ClockOut()" /><br><br>
-  <div class="alert alert-primary" role="alert" id="message">
-  </div>
-  </div> 
-  </div> 
-  </form>
-  </div>
+    <div style="padding: 10px;">
+      <h1>Time Tracker</h1><br>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="employee" style="font-weight:bold">Employee</label>
+            <select class="form-control" id="employee"></select>
+          </div>
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <input type="button" value="Clock In" id="clockin" class="btn btn-primary" onclick="ClockIn()" />
+            <input type="button" value="Clock Out" id="clockout" class="btn btn-primary" onclick="ClockOut()" /><br><br>
+            <div class="alert" role="alert" id="message"></div>
+          </div>
+        </div>
+      </form>
+    </div>
   </body>
 </html>
